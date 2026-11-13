@@ -3,14 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/PlayerState.h"
+#include "DuTraveller/RPGPlayerState.h"
 #include "DT_PlayerState.generated.h"
 
-/**
- * 
- */
-UCLASS()
-class DT_API ADT_PlayerState : public APlayerState
+/** Modern framework identity backed by the authoritative RPG/GAS player state. */
+UCLASS(BlueprintType, Blueprintable)
+class DT_API ADT_PlayerState : public ARPGPlayerState
 {
 	GENERATED_BODY()
 	

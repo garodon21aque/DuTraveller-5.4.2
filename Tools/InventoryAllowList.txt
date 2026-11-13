@@ -1,0 +1,14 @@
+/Game/UI/InventorySystem/WBP_DropWidget.WBP_DropWidget
+/Game/UI/InventorySystem/WBP_Equipment.WBP_Equipment
+/Game/UI/InventorySystem/WBP_EquipmentSlot.WBP_EquipmentSlot
+/Game/UI/InventorySystem/WBP_EquipmentToolBar.WBP_EquipmentToolBar
+/Game/UI/InventorySystem/WBP_InvItemTooltip.WBP_InvItemTooltip
+/Game/UI/InventorySystem/WBP_ItemObject.WBP_ItemObject
+/Game/UI/InventorySystem/WBP_NPCVendorShop.WBP_NPCVendorShop
+/Game/UI/InventorySystem/WBP_NPCVendorShopSell.WBP_NPCVendorShopSell
+/Game/UI/InventorySystem/WBP_PlayerInventory.WBP_PlayerInventory
+/Game/UI/InventorySystem/WBP_SellPanel.WBP_SellPanel
+/Game/UI/InventorySystem/WBP_VendorItemObject.WBP_VendorItemObject
+/Game/UI/CraftingSystem/WBP_CraftingMenu.WBP_CraftingMenu
+/Game/UI/CraftingSystem/WBP_ItemBP.WBP_ItemBP
+/Game/UI/CraftingSystem/WBP_ItemBpTooltip.WBP_ItemBpTooltip

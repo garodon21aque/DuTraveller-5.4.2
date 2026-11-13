@@ -1,0 +1,51 @@
+{
+  "authority": "User confirmed quest categories on 2026-10-23",
+  "confirmed_quest_categories": [
+    "Guild",
+    "Personal",
+    "Party",
+    "Class",
+    "Area"
+  ],
+  "related_contracts": [
+    "MultiplayerGameplayContract.json",
+    "PlayerProgressionContract.json",
+    "GuildEconomyWorldContract.json",
+    "SpawnAndRandomQuestContract.json"
+  ],
+  "restoration_requirements": [
+    "Support all five user-confirmed quest categories and preserve any additional evidenced historical types.",
+    "Determine quest ownership independently from eligibility, region/context, progress sharing and reward entitlement. Do not assume a single category label defines all of these rules.",
+    "Personal quest state belongs to the relevant player. Party and guild quest state must use the intended party/guild identity and access rules, rather than whichever client opened the UI.",
+    "Class quest eligibility must respect the user's hybrid skill-tree progression model. Do not introduce exclusive class locks without original evidence.",
+    "Recover whether area quests are offered, activated or progressed by location and how their ownership and sharing work. Do not assume they reset on leaving the area.",
+    "Server-validate acceptance, qualifying objective events, progress changes, completion, turn-in and reward claims.",
+    "Replicate quest-log state, markers, notifications and party/guild progress to the appropriate recipients, with correct initialization for joining players.",
+    "Grant item, currency, experience, attribute/skill-point or guild rewards only as supported by each quest definition; prevent duplicate claims.",
+    "Preserve quest identifiers, stages, objective state and reward-claim state across their intended save, travel, reconnect and group lifetimes.",
+    "Restore location-based quest spawning, random quest selection, quest groups and randomized rewards from original evidence. Follow SpawnAndRandomQuestContract.json.",
+    "Keep server-owned rolled rewards stable through retries and persist claim state; prevent duplicate claims and client-driven rerolls."
+  ],
+  "unverified_rules": [
+    "Whether categories overlap, such as an area quest with party-shared progress",
+    "Class/path eligibility and whether a hybrid player may hold quests from multiple paths simultaneously",
+    "Acceptance authority and leader/member permissions for party and guild quests",
+    "Who receives credit: participants, nearby members, all current members or another eligibility set",
+    "Reward sharing, contribution requirements, repeatability and reset schedules",
+    "Behavior when players join, leave, disconnect or change party/guild during a quest",
+    "Area boundaries, triggers and travel behavior"
+  ],
+  "acceptance_checks": [
+    "Validate at least one quest definition from each confirmed category once its rules are recovered.",
+    "With two connected players, verify private progress isolation and intended shared progress/rewards.",
+    "Test membership changes, late joins and repeated completion/turn-in requests against authoritative eligibility and reward-claim state.",
+    "Verify UI, markers and saved state agree with the authoritative quest state for each player/group."
+  ],
+  "status": "Random personal quest offers, server acceptance, linked objectives, weighted stable rewards, claim protection and snapshots implemented in RPGDynamicQuestComponent. Legacy entry points resolve published random offers. Full static quest conversion, original UI and party/guild ownership remain separate integration work.",
+  "confirmed_dynamic_quest_scope": [
+    "Location-based quest spawners",
+    "Random quests",
+    "Quest groups; exact group semantics to recover",
+    "Random rewards with original pool/roll rules to recover"
+  ]
+}

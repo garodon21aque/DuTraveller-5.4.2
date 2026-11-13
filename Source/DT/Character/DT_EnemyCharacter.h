@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "DTBaseCharacter.h"
+#include "DuTraveller/RPGAICharacter.h"
 #include "DT_EnemyCharacter.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class DT_API ADT_EnemyCharacter : public ADTBaseCharacter
+class DT_API ADT_EnemyCharacter : public ARPGAICharacter
 {
 	GENERATED_BODY()
 	

@@ -3,14 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/PlayerController.h"
+#include "DuTraveller/RPGPlayerController.h"
 #include "DT_PlayerController.generated.h"
 
-/**
- * 
- */
-UCLASS()
-class DT_API ADT_PlayerController : public APlayerController
+/** Modern DT input/controller Blueprint plus restored RPG HUD and menu startup. */
+UCLASS(BlueprintType, Blueprintable)
+class DT_API ADT_PlayerController : public ARPGPlayerController
 {
 	GENERATED_BODY()
 	

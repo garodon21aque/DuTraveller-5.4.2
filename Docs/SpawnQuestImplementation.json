@@ -1,0 +1,52 @@
+{
+  "status": "Personal random quests and production spawn-area foundation implemented and validated; broader party/guild quest ownership and world/UI placement remain separate phase work",
+  "implemented": {
+    "random_world_spawning": "RPGSpawnArea: weighted actor pools, rotated/scaled box membership, server scheduling, live population limits, placement attempt budget, cooldown/backoff, ground slope checks, collision rejection, destruction tracking and cleanup",
+    "spawn_identity": "RPGSpawnContextComponent: replicated spawn ID, quest instance ID and location ID; server-only interaction/objective reporting; RPG character health reaching zero reports Defeated once",
+    "location_quest_spawning": "RPGRandomQuestSpawner: weighted quest/group pools, unique live quest offers, offer IDs, expiry and refresh, allowed-location filters, shared or single-consumer offers",
+    "quest_groups": "RPGQuestGroupDefinition: authored selection pools, configurable weights and active-per-player limit; prerequisite quest IDs support chains. Groups are separate from player parties.",
+    "acceptance": "PlayerState.DynamicQuests: owning-client request, server location/level/tag/prerequisite checks, duplicate-offer and active/history limits, owner-only quest replication",
+    "objective_progress": "Server event matching, target-class filters, quest/location attribution, bounded counts, required/optional objectives and persistent linked-actor credit deduplication",
+    "random_rewards": "Guaranteed items/currencies plus weighted random pools and quantity ranges, optional draws without replacement. Rewards and XP are snapshotted on acceptance; inventory capacity retries retain the original roll.",
+    "claiming": "Server-validated owner claims, inventory preflight/atomic item outputs, experience update and retained claim status; no client progress/reward-roll RPC",
+    "persistence": "Versioned quest/spawn snapshots and RPGSpawnQuestSaveGame container; restore only into fresh state, with identifier, progress, credit, class, transform and schema validation. Restore does not grant rewards.",
+    "legacy_bridge": "RPGQuestComponent.AddNewQuest resolves published random quest offers by QuestID; TurnInQuest forwards completed random quest claims to the owning PlayerState. Arbitrary client DataTables cannot supply rewards."
+  },
+  "production_assets": [
+    "/Game/Blueprints/Gameplay/Spawning/BP_MasterRandomSpawnArea",
+    "/Game/Blueprints/Gameplay/Spawning/BP_MasterLocationQuestSpawner",
+    "/Game/Blueprints/Gameplay/Spawning/BP_MasterQuestTarget",
+    "/Game/Data/Quests/DA_Quest_InspectRuins",
+    "/Game/Data/Quests/DA_Quest_InspectSupplies",
+    "/Game/Data/Quests/DA_QuestGroup_LocationDiscovery"
+  ],
+  "authoring_steps": [
+    "Place BP_MasterRandomSpawnArea in the intended level. Assign unique AreaId and LocationId, resize Area, choose production ActorClass entries and weights, and configure population/ground/cooldown rules.",
+    "Place BP_MasterLocationQuestSpawner inside a location. Assign AreaId/LocationId and QuestGroups. The supplied location definitions use Location.Ruins; each placed spawner and its quest definitions must share the intended production LocationId.",
+    "Create RPGRandomQuestDefinition and RPGQuestGroupDefinition data assets for real quest content. Set objectives, location/level/tag/prerequisite requirements, rewards and group limits.",
+    "UI reads Spawner.Offers and PlayerState.DynamicQuests.Records, binds OnOffersChanged/OnQuestsChanged/OnRequestResult, and invokes RequestAcceptOffer or RequestClaimReward.",
+    "For quests with dedicated objective actors, bind the authoritative OnQuestAccepted event to the intended area's TrySpawnOne using InstanceId. Use SpawnedActorReady for per-actor setup. Ground rules and population/cooldown limits still apply.",
+    "Authoritative interactions call SpawnContext.ReportQuestEvent with the definition's event name, for example Interacted or Harvested. Spawned RPG characters automatically report Defeated at zero health. Server crafting or other systems can call RecordObjectiveEvent for objectives explicitly configured without a linked actor.",
+    "The server save flow captures quest and area snapshots into RPGSpawnQuestSaveGame together with the corresponding inventory/player/world state. Restore into fresh state before resuming gameplay."
+  ],
+  "chosen_defaults": [
+    "Quest groups are selection pools, with chains expressed through prerequisites; original group semantics were not recovered.",
+    "Random rewards roll at acceptance, once per personal quest instance.",
+    "Offers may be accepted once by each eligible player unless SingleConsumerOffers is enabled.",
+    "Quest claiming is available to the owner after completion and does not require returning to the original location.",
+    "Current quest records are personal, owner-only state. Existing broader plans for party/guild quest ownership remain separate work."
+  ],
+  "integration_limits": [
+    "The Master Blueprint bases are production authoring entry points. Their supplied reward values remain configurable reconstruction defaults, not recovered original loot balance.",
+    "Production spawn pools, original main-world placement and existing quest widget layout/bindings still require content integration; existing game maps and widgets were not replaced.",
+    "Snapshots cover quest rolls/claims and spawn identity/transform/cooldown. Full inventory/world save orchestration, arbitrary actor combat/AI state and host/session lifecycle remain the separate persistence phase.",
+    "Packaged clients, dedicated servers and production-scale budgets require their own validation."
+  ],
+  "verification": {
+    "editor_build": "Saved/Logs/Codex-ProductionSpawnQuestBuild.log: Succeeded",
+    "native": "Saved/Automation/SpawningQuests-r3/index.json: 8 succeeded, 0 failed; includes physics-backed ground, slope, collision and Pawn-object ground rejection",
+    "multiplayer": "Saved/Automation/SpawningQuestsMultiplayer.json: 44 passed, 0 failed in a listen-server plus remote-client PIE run",
+    "multiplayer_scope": "Checks offer authority, remote acceptance, owner-only records, linked actor/context/location replication, objective anti-replay, exact random reward quantity, currency, XP and repeated-claim rejection",
+    "asset_promotion": "Saved/Automation/ProductionSpawnQuestAssets.json: six authored assets promoted to production Master/data paths"
+  }
+}

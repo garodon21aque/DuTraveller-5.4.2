@@ -1,0 +1,172 @@
+{
+  "objective": "Reconstruct the complete described DuTraveller multiplayer game with preserved legacy contracts and configurable gameplay data",
+  "overall_status": "In progress. The seven phases are not all complete; statuses and remaining gates below are authoritative.",
+  "completion_rule": "A phase is complete only when native code, required Blueprint/UI wiring, data/assets and its acceptance checks pass. A build alone is not completion.",
+  "phases": [
+    {
+      "phase": 1,
+      "name": "Verify multiplayer foundation",
+      "status": "verified_foundation",
+      "scope": [
+        "Server-owned GAS attributes and permanent point spending",
+        "Replicated inventory identity and quantities",
+        "Equipment bonuses that apply and remove once",
+        "Item -> Equipment -> Gear and separate consumable branches",
+        "Attribute UI controller wiring"
+      ],
+      "gate": "Native regression tests plus a host/remote-client check of ownership, state convergence and UI notifications"
+    },
+    {
+      "phase": 2,
+      "name": "Restore playable inventory and economy",
+      "status": "in_progress",
+      "scope": [
+        "Actual RPG player/controller wiring",
+        "Recoverable pickup and drop",
+        "Food and potions with server-side effects",
+        "Currency balances and atomic transfers",
+        "Ingredient validation and crafting",
+        "Vendor stock, prices and purchases",
+        "Inventory/equipment UI and appearance"
+      ],
+      "gate": "Two players can acquire, equip, use, trade with a vendor, craft and drop/recover items without duplication or loss"
+    },
+    {
+      "phase": 3,
+      "name": "Restore hybrid skills and combat",
+      "status": "in_progress",
+      "scope": [
+        "Configurable skills, costs, cooldowns and requirements",
+        "Learning and upgrading across trees",
+        "Active hotbar and passive assignments",
+        "Server-validated GAS activation and damage",
+        "Animations, weapons, VFX and HUD integration"
+      ],
+      "gate": "A remote player learns skills from different paths, equips them and uses them with matching costs, effects, cooldowns and presentation"
+    },
+    {
+      "phase": 4,
+      "name": "Restore parties and quests",
+      "status": "in_progress",
+      "scope": [
+        "Party membership and permissions",
+        "Personal, party, guild, class and area quest categories",
+        "Definition-driven objectives and eligibility",
+        "Progress replication and one-time rewards",
+        "Quest log, markers and notifications",
+        "Recover and integrate location-based quest spawners, random quests and quest groups",
+        "Restore server-owned random reward pools and stable reward claims"
+      ],
+      "gate": "Multi-client scenarios verify private/shared progress, membership changes, repeated requests and reward eligibility"
+    },
+    {
+      "phase": 5,
+      "name": "Build guild settlement economy",
+      "status": "pending",
+      "scope": [
+        "Guild membership, roles and bank",
+        "Territory and construction permissions",
+        "Building placement and material consumption",
+        "Farming, production and villagers",
+        "Building upgrades, guild technology and reputation",
+        "Guild management UI"
+      ],
+      "gate": "Guild members see consistent settlement state and concurrent actions preserve resources, currency and permissions"
+    },
+    {
+      "phase": 6,
+      "name": "Recover world and presentation",
+      "status": "pending",
+      "scope": [
+        "Identify the main-world package and guild session travel",
+        "Recover missing skeletons or verify compatible original rigs",
+        "Assemble player and AI visuals",
+        "Validate animation, navigation, encounters and interactions",
+        "Preserve screenshot-based UI references",
+        "Recover and integrate random world spawners and bounded spawn areas, with population limits and quest-instance links"
+      ],
+      "gate": "The intended worlds and representative player/AI/equipment combinations pass visual and gameplay checks"
+    },
+    {
+      "phase": 7,
+      "name": "Persist and package multiplayer game",
+      "status": "pending",
+      "scope": [
+        "Versioned player and guild/world saves",
+        "Reconnect, travel and host/session lifecycle",
+        "Save/load of points, skills, hotbars, items, equipment and quest reward claims",
+        "Development and Shipping packages",
+        "End-to-end host/remote-client regression runs",
+        "Persist selected random quests/rewards and supported spawn lifecycle state without duplicate spawns or rerolls"
+      ],
+      "gate": "Packaged clients retain correct state across supported save, travel and reconnect flows without duplicate bonuses or rewards"
+    }
+  ],
+  "working_rules": [
+    "Preserve checkpoints before binary asset changes",
+    "Use the correct player, AI and guild hierarchy rather than inferring roles from prefixes",
+    "Keep unknown balance and permissions configurable and label reconstruction defaults",
+    "Do not fabricate rigs or report class shells as working features",
+    "Test narrow coherent changes before full-project sweeps",
+    "Record failed hypotheses and change approach after two unsuccessful attempts",
+    "Recover original data/assets alongside implementation without blocking independent source work"
+  ],
+  "guild_design_clarification": "The user confirmed the guild settlement was still in progress and needs a new system designed and implemented. Treat screenshots as prototype guidance and implement configurable rules rather than waiting for a complete original guild codebase.",
+  "current_limitations": [
+    "Original skill/effect/item definitions and exact economy formulas are incomplete",
+    "The exact main-world map package remains unidentified; guild settlement behavior is authorized new design",
+    "The focused vendor/crafting transaction and party-authority regressions pass. The production two-client foundation has 28 distinct checks passing with zero Blueprint runtime errors, and all selected UI, currency and pickup Blueprints compile up to date. Full two-client commerce playthroughs, shared-party quests, guild settlement gameplay, complete combat presentation, persistence and packaged/dedicated-server testing remain incomplete."
+  ],
+  "foundation_verification": {
+    "native_tests": "10 passed, 0 failed",
+    "host_client_checks": "28 distinct checks passed, 0 failed, with zero Blueprint runtime errors",
+    "native_report": "Saved/Automation/RestorationFullPickupDrop/index.json",
+    "multiplayer_report": "Saved/Automation/MultiplayerFoundation.json",
+    "multiplayer_log": "Saved/Logs/Codex-PickupDrop-PIE2.log",
+    "scope": "Two PIE worlds in one editor process using the production RPGPlayerController, widgets and BP_MasterPickupItem; verifies owner-only HUD/inventory creation, overlay-controller assignment, inventory open/close, owner privacy, replicated equipment/consumables/attributes, remote drop and collection, attribute-controller notifications and a populated local hover tooltip. It does not establish complete vendor/crafting UI, visuals, dedicated-server or packaged behavior."
+  },
+  "spawn_and_random_quest_scope": "User confirms these systems existed in the GitHub project. Recovery evidence, unverified original rules and multiplayer acceptance checks are recorded in Docs/SpawnAndRandomQuestContract.json. Quest groups are not assumed to mean player parties.",
+  "implemented_spawn_quest_increment": {
+    "reference": "Docs/SpawnQuestImplementation.json",
+    "native": "Eight native regressions pass, including physics-backed ground/collision checks",
+    "multiplayer": "Forty-four listen-server/remote-client checks pass, including actor context replication and exact stable rewards",
+    "production_blueprints": "/Game/Blueprints/Gameplay/Spawning/BP_MasterRandomSpawnArea, BP_MasterLocationQuestSpawner and BP_MasterQuestTarget",
+    "production_data": "/Game/Data/Quests/DA_Quest_InspectRuins, DA_Quest_InspectSupplies and DA_QuestGroup_LocationDiscovery",
+    "remaining": "Production content placement, existing quest widget binding, party/guild ownership and full save orchestration remain separate phase gates"
+  },
+  "implemented_combat_skill_increment": {
+    "reference": "Docs/CombatSkillImplementation.json",
+    "hierarchy": "RPGActionComponent is the master replicated runtime for attacks, spells, utility actions and passives; child action objects are not individually replicated",
+    "native": "Nine restoration regressions pass including CombatAndHybridSkills",
+    "remaining": "Production ability data, input/HUD, montage/VFX/projectiles, AI activation and multiplayer/package validation remain before phase completion"
+  },
+  "implemented_ui_replication_increment": {
+    "reference": "Docs/UIReplicationImplementation.json",
+    "model": "Widgets and widget-controller UObjects are owning-client presentation objects; replicated gameplay state remains in the authoritative PlayerState/components and the master ActionComponent.",
+    "controllers": "Overlay, attribute and spell controller native parents now bind replicated state and retain their Blueprint child identities.",
+    "audit": "All 28 selected controller, HUD, attribute, spell, globe, inventory, crafting, tooltip, currency, pickup and quest assets compile BS_UP_TO_DATE.",
+    "inventory_hover": "The shared RPG_ItemWidget and RPG_ItemToolTip parents create, attach and refresh detailed item hover presentation. Empty slots and missing currency balances use safe local presentation objects, and Bronze/Gold use the Currency item branch. A real owning remote client passed the replicated item/quantity tooltip check with zero Blueprint runtime errors.",
+    "production_lifecycle": "The owning production RPGPlayerController creates WBP_HUD, assigns the overlay controller, injects the pawn inventory into WBP_PlayerInventory and toggles it locally with the configured inventory input.",
+    "remaining": "Complete visible vendor/crafting/equipment interaction playthroughs, all production skill/quest/party notifications and packaged multiplayer UI validation."
+  },
+  "implemented_pickup_drop_increment": {
+    "hierarchy": "RPGPickupItem is the native replicated parent; BP_MasterPickupItem is the configured production factory and BP_Pickup remains its child.",
+    "authority": "Drop and collection requests route to the server. The server validates ownership, quantity, equipped state and collection distance.",
+    "atomicity": "The world pickup is created and initialized before inventory consumption. A failed spawn preserves the stack; partial collection leaves the remainder in the pickup.",
+    "presentation": "Item class and quantity replicate publicly while private inventory subobjects remain owner-only. Local presentation objects support retained interaction widgets without becoming spendable inventory.",
+    "verification": "InventoryValidation passed; the two-client production run passed 28 distinct checks with zero Blueprint runtime errors."
+  },
+  "implemented_commerce_increment": {
+    "authority": "Vendor purchases and crafting exchanges commit costs, output and finite stock atomically on the server.",
+    "replication": "Vendor offers replicate publicly; recipe subobjects and recipe definitions replicate owner-only.",
+    "ui": "WBP_CraftingMenu and WBP_NPCVendorShop use native owning-client bridge parents, refresh from replicated gameplay state and route actions through server RPCs. BP_MasterVendor is the production vendor parent.",
+    "verification": "CraftingAndCurrencyTransactions passes with the known GameplayCue-path warning only; the retained commerce widgets compile up to date.",
+    "remaining": "A production two-client visible buy/craft playthrough and authored recipes/offers remain required."
+  },
+  "implemented_party_increment": {
+    "authority": "Party invitations, acceptance, decline, leave, leader-only invitation and leader transfer run on the server.",
+    "replication": "Every member receives the same stable party ID, leader and roster; pending invitations are owner-only.",
+    "verification": "PartyAuthority passes with the known GameplayCue-path warning only.",
+    "remaining": "Shared quest acceptance/progress/rewards, party UI and two-client PIE validation remain required."
+  }
+}

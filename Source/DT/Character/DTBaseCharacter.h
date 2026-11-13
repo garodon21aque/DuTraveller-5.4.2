@@ -3,11 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Character.h"
+#include "DuTraveller/RPGCharacter.h"
 #include "DTBaseCharacter.generated.h"
 
-UCLASS()
-class DT_API ADTBaseCharacter : public ACharacter
+/**
+ * Compatibility alias retained for older DT assets. New active player and NPC
+ * classes branch directly from ARPGPlayerCharacter and ARPGNPCCharacter.
+ */
+UCLASS(BlueprintType, Blueprintable, meta=(DeprecatedNode, DeprecationMessage="Use RPGPlayerCharacter or RPGNPCCharacter branches"))
+class DT_API ADTBaseCharacter : public ARPGCharacter
 {
 	GENERATED_BODY()
 

@@ -1,0 +1,47 @@
+{
+  "authority": "User clarifications and eight supplied screenshots, 2026-10-23. User subsequently confirmed the guild settlement system was in progress and needs to be designed and implemented.",
+  "development_mode": "New design and implementation guided by the prototypes. Do not block guild implementation waiting for a complete original version. Use configurable rules and identify chosen reconstruction defaults.",
+  "confirmed_scope": [
+    "Inventory, player money and currencies are multiplayer gameplay state requiring correct server authority and replication.",
+    "The game includes building inside a guild session, using crafting items/materials, together with vendors and farming.",
+    "The user identifies the supplied world/map reference as the main map. Do not assume the currently configured Tutorial map is the intended main world.",
+    "Guild settlement gameplay and party formation are distinct systems; preserve their separate ownership and membership semantics."
+  ],
+  "screenshot_evidence": [
+    "Settlement UI tabs: Buildings, Villagers, Guild Tech, Bank, Members and Reputation.",
+    "Mine detail UI shows building level, performance, occupied villagers, maximum level, income, tax, upkeep and generated items. Displayed example values are not confirmed balance constants.",
+    "Build widget hierarchy lists Farm, Watch Tower, Barracks, Market, Bank, BlackSmith, Tavern, Portal, GuildHall, Lumberjack, Mine, Tailor, Wall and Academy.",
+    "Farm references include unplanted ground and grown crops with an interaction prompt.",
+    "Guild tech UI includes Base, Members, Crafting and Reputation rows.",
+    "A screenshot identifies a guild widget parent displayed as DT Guild Widget. DT-prefixed classes can belong to intended guild gameplay; do not classify all DT code as disposable template code.",
+    "Other visible historical asset names include BP_MasterBuilding, BP_Farm, BP_TerritoryActor, WBP_GuildMenu, WBP_GuildTech, WBP_MemberSlot and WBP_NPCSlot.",
+    "The world-map artwork screenshot is a geographic reference. It does not establish which local Unreal map package contains the implemented world.",
+    "Main menu reference includes Tutorial, Host Game, Join Game, Settings, Load Game and Quit Game."
+  ],
+  "restoration_requirements": [
+    "Keep personal inventory/currency separate from guild-owned bank/resources, and validate membership and permissions for guild mutations on the server.",
+    "Buying and selling validate stock, quantities, capacity and authoritative currency balances, with item/currency changes committed together.",
+    "Crafting and construction validate recipes, required materials, eligibility, placement and permissions before consuming resources and producing an item or building.",
+    "Concurrent construction, crafting, purchases, harvests and bank transfers must preserve inventory and currency totals and avoid duplicate outputs.",
+    "Guild buildings, placement, upgrade levels, assigned villagers and production state replicate to their intended viewers and persist for their intended world/session lifetime.",
+    "Farming interaction, growth, harvesting and output ownership use server-owned state. Define configurable growth durations and harvest output rules for the new system.",
+    "Design guild technology, membership, bank, reputation and building production rules as configurable new gameplay data; distinguish proposed defaults from confirmed user requirements.",
+    "Identify and inspect the actual main-world map, its game mode, guild territory/session ownership and travel flow before changing default gameplay wiring."
+  ],
+  "unverified_rules": [
+    "Currency denominations, conversion rates, prices and limits",
+    "Guild bank ownership, member roles and spending/withdrawal permissions",
+    "Recipe and construction costs, placement restrictions, upgrades and demolition refunds",
+    "Farming growth timers, offline progression and harvest ownership",
+    "Production schedules, taxes, upkeep, villager effects and reputation/technology formulas",
+    "Whether guild sessions are separate instances and how they persist across host disconnects or server restarts",
+    "Exact local package path corresponding to the pictured main world"
+  ],
+  "local_snapshot_findings": [
+    "The inspected source project contains vendor/crafting/house UI, reconstructed gold/bronze items and reconstructed Farm/Tavern/TownHall Blueprints.",
+    "RPGBuilding is an empty native actor shell. The former Craft implementation added output without consuming ingredients; the reconstructed native implementation now validates configured recipes and commits costs/output atomically, with its regression test passing. UI integration is pending.",
+    "The photographed WBP_GuildMenu, WBP_GuildTech, BP_TerritoryActor and BP_MasterBuilding assets were not found by filename in the inspected source snapshot. A corresponding guild/territory/master-building search in the other local DuTraveller project also returned no matches.",
+    "Only MainMenu and Tutorial are under Content/Levels in the source snapshot; remaining map packages are art/sample maps. The pictured main world has not been identified among them."
+  ],
+  "status": "Guild settlement is an authorized new implementation based on the user's in-progress prototypes. Native functionality, UI, replication and persistence must be built and tested; screenshot values remain examples rather than fixed balance rules."
+}

@@ -1,0 +1,1 @@
+/Game/UI/HUD/SpellGlobes/SpellBoard/WBP_SpellGlobe_Button.WBP_SpellGlobe_Button

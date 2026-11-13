@@ -1,0 +1,37 @@
+{
+  "authority": "User confirmed multiplayer, quests and party creation on 2026-10-23",
+  "confirmed_scope": [
+    "DuTraveller is a multiplayer game. Player gameplay data must be correctly replicated with appropriate ownership and visibility.",
+    "Quest gameplay includes guild, personal, party, class and area quests. Follow QuestGameplayContract.json for ownership, eligibility, shared progress and reward requirements.",
+    "Party creation and membership are part of the restoration scope.",
+    "Player currency and guild settlement/economy state are also authoritative multiplayer systems. Follow GuildEconomyWorldContract.json for building, crafting, vendors, farming and main-world evidence."
+  ],
+  "implementation_requirements": [
+    "The server owns authoritative gameplay state and validates requests to spend points, learn/equip skills, activate abilities, acquire/move/use/drop items, equip items and receive rewards.",
+    "Replicate each state field to its intended audience. Private inventories, unspent points and detailed progression are not automatically public to every client.",
+    "Clients cannot select another player's state as the mutation target. Derive request ownership from the authenticated owning connection and validate referenced actors/items.",
+    "Replicated attributes, equipment effects, learned skill ranks, hotbar assignments, inventory, quest state and party membership must initialize and update the correct local UI.",
+    "Equipment bonuses, ability effects, item transfers and rewards apply once on the server; client notifications and replication do not apply them again.",
+    "Restore quest acceptance, objective progression, completion, turn-in and rewards using server-validated gameplay events.",
+    "Restore party creation and membership with server-validated state transitions. Recover supported invite, join, leave, leader and disconnect behavior from original evidence.",
+    "Recover persistence and reconnect/travel behavior for player progression, inventory, quests and parties rather than assuming all state shares one lifetime."
+  ],
+  "rules_requiring_original_evidence": [
+    "Listen-server, dedicated-server, peer hosting and session discovery requirements",
+    "Party size, invite/accept rules, leadership transfer, kick permissions and persistence",
+    "Individual versus shared quest progress, party eligibility and shared reward rules",
+    "Loot ownership, trading, reward distribution and item visibility",
+    "Which stats, equipment details, quest markers and party information other players may see"
+  ],
+  "acceptance_checks": [
+    "Test with at least two distinct connected players, including a remote client, and ensure state remains associated with the correct player.",
+    "Spend attribute/skill points and equip items from the remote client; verify authoritative balances, bonuses, resulting effects and local UI converge without duplication.",
+    "Verify visible equipment and combat presentation on another client while private data stays restricted to its intended audience.",
+    "Validate server-side ability eligibility, resources, cooldowns, targets and damage independently of client UI.",
+    "Test concurrent item pickup and repeated requests for spending, crafting and quest rewards against authoritative balances and eligibility.",
+    "Exercise quest acceptance, objective updates, completion and rewards on separate players and with a party according to recovered sharing rules.",
+    "Exercise party creation and supported membership transitions, including a departing or disconnected member, without stale membership or another player's UI/state being overwritten.",
+    "Verify initialization, late joins and supported travel/reconnect flows; test the actual hosting mode once established."
+  ],
+  "implementation_status": "Requirements captured. Replication, quest completion and party functionality have not been established as implemented or tested by the current inspection."
+}

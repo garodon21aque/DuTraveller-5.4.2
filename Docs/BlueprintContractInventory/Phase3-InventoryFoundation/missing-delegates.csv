@@ -1,0 +1,4 @@
+"Name","Occurrences","Subsystems","Assets","Evidence"
+"<invalid delegate>","4","Crafting; Inventory.Equipment.Vendors","Content/UI/CraftingSystem/WBP_ItemBP.uasset; Content/UI/InventorySystem/WBP_Equipment.uasset","Event Dispatcher has no property  Assign <invalid delegate>"
+"OnEquipedItemsChanged","4","Inventory.Equipment.Vendors","Content/UI/InventorySystem/WBP_Equipment.uasset","OnEquipedItemsChanged_Event  : unable to determine expected signature - is the delegate pin connected?; OnEquipedItemsChanged_Event  Signature Error: Unable to determine expected signature - is the delegate pin connected?"
+"OnRecipeModified","4","Crafting","Content/UI/CraftingSystem/WBP_ItemBP.uasset","OnRecipeModified_Event  : unable to determine expected signature - is the delegate pin connected?; OnRecipeModified_Event  Signature Error: Unable to determine expected signature - is the delegate pin connected?"

@@ -1,0 +1,76 @@
+{
+  "status": "Shared replicated UI-controller foundation, HUD repair and inventory hover presentation are implemented and verified in editor and two-client PIE",
+  "ownership_model": {
+    "authoritative_state": "Server-owned gameplay state lives in RPGPlayerState GAS attributes/progression, RPGSkillComponent, inventory/equipment and quest components, and the master RPGActionComponent.",
+    "replication": "Gameplay components replicate their state. UUserWidget instances and widget-controller UObject instances stay local to the owning client.",
+    "controllers": "Local controller instances subscribe to replicated PlayerState/component delegates, broadcast presentation delegates to widget children and send validated requests through server RPC entry points.",
+    "widgets": "Parent widgets receive a generic controller through RPG_UserWidget.SetWidgetController; child widgets bind to presentation delegates exposed by the appropriate controller."
+  },
+  "controller_hierarchy": [
+    {
+      "blueprint": "/Game/Blueprints/Controllers/BP_RPGOverlayWidgetController",
+      "native_parent": "/Script/DuTraveller.RPGOverlayWidgetController",
+      "state": "Health, max health, mana, max mana, level and XP presentation from replicated GAS/PlayerState data"
+    },
+    {
+      "blueprint": "/Game/Blueprints/Controllers/BP_RPGAttributeWidgetController",
+      "native_parent": "/Script/DuTraveller.RPGAttributeMenuWidgetController",
+      "state": "Primary/secondary attributes and attribute points; spending is a validated server request"
+    },
+    {
+      "blueprint": "/Game/Blueprints/Controllers/BP_RPGSpellWidgetController",
+      "native_parent": "/Script/DuTraveller.RPG_SpellMenuWidgetController",
+      "state": "Available definitions, learned ranks, spell points and hotbar assignments; learn/equip are validated server requests"
+    }
+  ],
+  "hud_repair": {
+    "asset": "/Game/UI/HUD/WBP_HUD",
+    "checkpoint": "C:/Personal Games/RestorationCheckpoints/before-ui-hud-repair-20261023-0655/WBP_HUD.uasset",
+    "checkpoint_sha256": "9C10E545247DD740FD2858B495065605BEAAB08A1CC2566788C06197719A717B",
+    "change": "The stale generic GetComponentByClass health binding now uses RPG_AbilitySystemLibrary.GetPlayerAttributeView and reads the RPGCharacter AttributeComp view refreshed from replicated GAS state.",
+    "asset_modified": true,
+    "compile_status": "BS_UP_TO_DATE"
+  },
+  "inventory_hover": {
+    "item_parent": "/Script/DuTraveller.RPG_ItemWidget",
+    "tooltip_parent": "/Script/DuTraveller.RPG_ItemToolTip",
+    "item_children": [
+      "/Game/UI/InventorySystem/WBP_ItemObject",
+      "/Game/UI/CraftingSystem/WBP_ItemBP"
+    ],
+    "tooltip_children": [
+      "/Game/UI/InventorySystem/WBP_InvItemTooltip",
+      "/Game/UI/InventorySystem/WBP_EquipmentToolBar",
+      "/Game/UI/CraftingSystem/WBP_ItemBpTooltip"
+    ],
+    "behavior": "The shared item parent creates and attaches an item-specific or fallback tooltip, refreshes it when quantity changes, and supplies display name, description, thumbnail, quantity, price, rarity, type and deterministic details for gear bonuses, consumables and recipes. Empty slots receive local zero-quantity presentation objects so retained Blueprint graphs never dereference null.",
+    "legacy_compatibility": "The native parent synchronizes its Item input into the retained ItemObject member before Blueprint PreConstruct and Construct. The inherited Recipe input remains because retained inventory Create Widget nodes serialize recipe values. WBP_ItemBP also retains a legacy variable with that name, producing one non-failing name warning while all selected assets compile up to date.",
+    "currency_hierarchy": "BP_BronzeItem and BP_GoldItem now inherit Currency_ItemObject. Missing balances resolve to cached local zero-quantity presentation objects; they are not replicated inventory stacks and cannot be spent, traded or consumed."
+  },
+  "verification": {
+    "blueprint_audit": {
+      "report": "Saved/Automation/UIBlueprintAudit.json",
+      "log": "Saved/Logs/Codex-UIBlueprintAudit-PickupDrop.log",
+      "result": "28 selected UI, currency and pickup assets loaded and compiled BS_UP_TO_DATE; 0 failed"
+    },
+    "native_tests": {
+      "report": "Saved/Automation/RestorationFullPickupDrop/index.json",
+      "log": "Saved/Logs/Codex-RestorationFullPickupDrop.log",
+      "result": "10 passed, 0 failed; 9 clean successes and 1 success with the known GameplayCue path warning"
+    },
+    "multiplayer_pie": {
+      "report": "Saved/Automation/MultiplayerFoundation.json",
+      "log": "Saved/Logs/Codex-PickupDrop-PIE2.log",
+      "result": "28 distinct checks passed, 0 failed, 0 Blueprint runtime errors",
+      "hover_assertion": "The owning remote client created an item widget and attached a populated tooltip for its replicated item and quantity.",
+      "privacy_assertions": "Another player's inventory and unspent points remained private.",
+      "production_ui_assertions": "The production RPGPlayerController created the HUD root for the owning client, assigned its overlay controller and opened/closed the production inventory locally.",
+      "pickup_assertions": "A remote player requested a drop, BP_MasterPickupItem replicated its item class and quantity, and a validated collection request returned it to the owning inventory."
+    }
+  },
+  "remaining_acceptance": [
+    "Exercise inventory selection, equipment, crafting, vendor and tooltip flows through visible production UI with host and remote clients",
+    "Verify owner-only notifications for every production skill, hotbar, quest and party widget",
+    "Validate the complete UI in packaged multiplayer after production maps, input and session travel are complete"
+  ]
+}

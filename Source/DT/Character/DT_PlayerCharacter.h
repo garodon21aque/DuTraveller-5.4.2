@@ -3,14 +3,16 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "DTBaseCharacter.h"
+#include "DuTraveller/RPGPlayerCharacter.h"
 #include "DT_PlayerCharacter.generated.h"
 
 /**
- * 
+ * Unified player-character base. Existing DT Blueprints keep their Motion
+ * Matching, Pose Search and traversal graphs, while inheriting the restored
+ * RPG inventory, equipment, quest, action and GAS actor-info lifecycle.
  */
-UCLASS()
-class DT_API ADT_PlayerCharacter : public ADTBaseCharacter
+UCLASS(BlueprintType, Blueprintable)
+class DT_API ADT_PlayerCharacter : public ARPGPlayerCharacter
 {
 	GENERATED_BODY()
 	

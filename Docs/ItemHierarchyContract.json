@@ -1,0 +1,25 @@
+{
+  "authority": "User clarifications, 2026-10-23",
+  "confirmed_design": [
+    "Item is the common root for several item branches and intermediate/child types.",
+    "The equipment branch is Item -> Equipment -> Gear.",
+    "Gear includes weapons, armour/clothing, trinkets and other wearable or wieldable equipment. Do not name the common gear branch Clothing.",
+    "Food and potions belong to non-equipment item branches. They must not inherit equipment slot or worn-gear stat behavior merely because they are inventory items.",
+    "Preserve intermediate types and concrete child definitions where original evidence establishes them; the exact complete original tree has not yet been recovered."
+  ],
+  "local_implementation_evidence": [
+    "UFood_ItemObject currently derives directly from UItemObject and contains no food-specific effect implementation.",
+    "UEquipment_ItemObject currently derives from UItemObject. The user-confirmed Gear layer still needs implementation.",
+    "UItemBlueprint derives from UItemObject and represents a crafting recipe item with required-item and output references.",
+    "The reconstructed BP_GoldItem and BP_BronzeItem derive from ItemObject.",
+    "No potion-specific native class or potion item Blueprint was found in the inspected Source/DuTraveller and Content/Blueprints trees."
+  ],
+  "restoration_requirements": [
+    "Shared identity, quantity, stack handling, inventory ownership, display metadata and replication belong to appropriate shared item layers.",
+    "Equipment and gear extend shared items with their actual equip/slot/appearance/stat rules; they do not absorb all inventory item types.",
+    "Food/potion use must validate eligibility and apply the intended server-side effect before consuming quantity. Failed use preserves the item.",
+    "Consumable effects must remain distinct from permanent attribute investment and worn-equipment modifiers.",
+    "Recover exact potion/food effects, stacking, durations, cooldowns, intermediate classes and concrete item definitions without inventing original values."
+  ],
+  "status": "Design captured. Food exists as a class shell; complete non-equipment branches, potion effects and concrete definitions are not yet restored."
+}

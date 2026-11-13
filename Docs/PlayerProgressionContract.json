@@ -1,0 +1,43 @@
+{
+  "authority": "User clarifications and supplied DuTraveller screenshots, 2026-10-23",
+  "network_contract": "MultiplayerGameplayContract.json: progression, inventory/equipment and skills must use server-authoritative mutations and appropriately scoped replication; captured design is not a claim of completed implementation.",
+  "confirmed_rules": [
+    "Spell and talent trees provide class or skill-path references; players can combine skills across those paths as they level up.",
+    "Do not impose mutually exclusive Mage/Warrior player classes or class-based skill restrictions.",
+    "Player level/progression governs access to combinations. Preserve evidenced point-spending rules and recover additional requirements from original evidence.",
+    "Learning or upgrading a skill, assigning it to a slot, and activating it are distinct operations.",
+    "Restore the connection between the abilities screen's equipped skills and the gameplay hotbar.",
+    "Keep active/offensive slots and passive slots distinct. Recover slot compatibility and passive application behavior from original evidence.",
+    "Players can spend attribute points to permanently increase base primary attributes. Attribute points and spell/skill points are separate progression balances.",
+    "The supplied Attributes screen shows spend controls for Strength, Intelligence, Vigor, Defence, Resilience and Luck, with a separate Secondary Attributes section. Preserve serialized identifiers when UI spelling differs from code tags.",
+    "Equipment worn by the player can add bonuses to the player's base stats. Carrying an item in inventory alone does not establish that its equipment bonus is active.",
+    "Track permanent/base attributes separately from equipment contributions so equipping, swapping and unequipping can apply and remove the correct bonuses without corrupting permanent progression. Recover additive, percentage, stacking and derived-stat rules from original evidence."
+  ],
+  "screenshot_observations": [
+    "Abilities screen contains Spell Tree, Talent Tree, Spell Points, Spend Point, Equip, current description and next-level description.",
+    "The illustrated active slot labels include LMB, RMB and 1 through 9; passive slots appear separately.",
+    "Gameplay images show the skill hotbar, passive indicators, resource orbs, minimap and different equipped character appearances.",
+    "Images have differing HUD layouts and some debugging/compile messages. They document design and prior running states, not proof that this local snapshot currently works."
+  ],
+  "do_not_infer": [
+    "Exact spell damage, costs, cooldowns, level gates, prerequisites, rank limits or refund rules from icons alone.",
+    "A complete roster of exclusive player classes from widget names such as Mage or Warrior.",
+    "Class-specific model or equipment restrictions without supporting evidence.",
+    "That every historical screenshot uses the same finalized number of passive slots or HUD layout.",
+    "Attribute point awards per level, points required per increase, attribute increment size, caps, reset rules or derived-stat formulas from screenshot values alone."
+  ],
+  "restoration_acceptance": [
+    "One player can retain and equip learned skills from more than one tree when progression requirements are met.",
+    "Spending a skill point updates the learned rank and both description panels consistently.",
+    "Equipping updates the selected hotbar slot and its input binding without removing unrelated learned skills.",
+    "Hotbar activation invokes the assigned skill with its actual resource, cooldown, animation and effect behavior.",
+    "Passive assignment applies and removes the appropriate effect exactly once, once its intended rules are recovered.",
+    "Learned skills, ranks and slot assignments survive save/reload according to the original persistence rules.",
+    "Spending attribute points validates the available balance, deducts the configured cost and applies the configured permanent base-attribute increase exactly once; insufficient points do not change either value.",
+    "Attribute-point spending updates dependent secondary stats and the attribute/HUD displays according to recovered formulas, independently of spell-point spending.",
+    "Unspent attribute points and purchased base-attribute increases survive save/reload and remain intact after equipment swaps.",
+    "Equipping applies the item's stat contribution once; swapping removes the previous item's contribution and applies the replacement; unequipping removes only that item's contribution.",
+    "Stat-dependent resource limits, combat values and HUD displays update consistently after equipment changes. Recover current-resource adjustment rules from evidence.",
+    "Loading an equipped item restores its bonuses exactly once and does not accumulate extra bonuses across reloads."
+  ]
+}

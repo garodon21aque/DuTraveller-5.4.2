@@ -6,6 +6,8 @@
 #include "GameFramework/HUD.h"
 #include "DT_HUD.generated.h"
 
+class UDTUIRoot;
+
 /**
  * 
  */
@@ -13,5 +15,8 @@ UCLASS()
 class DT_API ADT_HUD : public AHUD
 {
 	GENERATED_BODY()
-	
+public:
+	/** HUD Blueprints access the same root that the owning controller manages. */
+	UFUNCTION(BlueprintPure, Category="DT|UI")
+	UDTUIRoot* GetPlayerUIRoot() const;
 };

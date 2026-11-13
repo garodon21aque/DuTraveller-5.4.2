@@ -1,0 +1,74 @@
+{
+  "status": "Proposed implementation design authorized by the user; not a claim that these systems are already playable",
+  "source": "User confirmed the guild prototype was unfinished and asked us to design and implement the system",
+  "identity": {
+    "guild": "Stable guild ID independent of leader connection or player pawn",
+    "member": "Persistent authenticated player identity, never a client-supplied display name",
+    "settlement": "Stable settlement ID linked to guild ID; world actors carry stable instance IDs",
+    "party": "Separate membership and lifecycle; joining a party does not grant guild permissions"
+  },
+  "authority_and_visibility": [
+    "Clients submit requests through their own player controller; the server derives the requesting identity from the connection",
+    "Server checks current membership, permission, range, world/session and definition for every request",
+    "Replicate member management and bank details only to authorized viewers; nearby nonmembers may see public building appearance",
+    "Client placement ghosts are presentation only; server validates the final transform and spawns the actual building",
+    "Use the existing item definitions and inventory transaction rules for materials and currencies, avoiding a second unrelated wallet"
+  ],
+  "permissions": {
+    "model": "Configurable permission sets per role, checked on the server",
+    "proposed_initial_roles": ["Leader", "Officer", "Member"],
+    "permissions": ["Invite", "RemoveMember", "ManageRoles", "Deposit", "Withdraw", "PlaceBuilding", "UpgradeBuilding", "DemolishBuilding", "AssignVillager", "Research", "ManageVendors"],
+    "defaults": "Leader receives all permissions. Member deposits are permitted. Other permissions are explicitly configured; role labels alone do not grant authority.",
+    "leader_transition": "Transfer leadership explicitly before a leader leaves; a disconnect does not transfer ownership"
+  },
+  "bank": {
+    "storage": "Guild-owned item stacks with stable IDs and configured capacity",
+    "transfer": "Plan source and destination changes together, reject insufficient balance or capacity, then commit both while preventing reentrant mutation",
+    "equipment": "Reject depositing worn items; item ownership and identity are preserved through transfers",
+    "concurrency": "Server serializes mutations and records operation results so retransmitted requests cannot duplicate accepted actions"
+  },
+  "buildings": {
+    "definition_data": ["Definition ID", "Actor/visual class", "Footprint", "Allowed territory rules", "Construction material costs", "Maximum level", "Upgrade definitions", "Worker capacity", "Production recipes", "Upkeep", "Technology requirements"],
+    "instance_data": ["Instance ID", "Guild ID", "Settlement ID", "Definition ID", "Transform", "Level", "Construction state", "Assigned villager IDs", "Production state"],
+    "placement_checks": ["Finite transform and allowed scale", "Guild territory and permission", "Configured placement range", "Ground support and slope", "Footprint collision", "Exclusion zones", "Building limits", "Required technology", "Complete material availability"],
+    "commit": "Validate and prepare spawn before consuming costs. Publish the completed instance and resource changes together; failed creation leaves materials unchanged.",
+    "prototype_types": ["Farm", "WatchTower", "Barracks", "Market", "Bank", "Blacksmith", "Tavern", "Portal", "GuildHall", "Lumberjack", "Mine", "Tailor", "Wall", "Academy"],
+    "balance": "Prototype screenshot numbers are examples. Costs, limits and bonuses live in editable definitions."
+  },
+  "farming_and_production": {
+    "farm_states": ["Empty", "Growing", "Ready"],
+    "growth": "Server timestamps and configured crop duration; replicate state changes rather than ticking every plot on each client",
+    "harvest": "Permission and range checked once; output capacity checked before resetting a ready crop; repeated harvest requests cannot produce duplicate yields",
+    "production": "Configured recipe consumes inputs and adds outputs atomically to the guild store; blocked output capacity pauses production without losing inputs",
+    "villagers": "Stable worker identity assigned to at most one building, within configured capacity",
+    "offline_policy": "Explicit setting; initial implementation advances only while the authoritative settlement session is running until offline catch-up is separately tested"
+  },
+  "technology_and_reputation": {
+    "technology": "Definition-driven prerequisites, costs and ranked effects; validate before charging; prevent repeated unlocks",
+    "reputation": "Server-owned progression with explicit sources and thresholds",
+    "tax_and_upkeep": "Configurable scheduling and denominations; no screenshot values hardcoded as recovered formulas"
+  },
+  "ui": {
+    "tabs": ["Buildings", "Villagers", "Guild Tech", "Bank", "Members", "Reputation"],
+    "interaction": "UI displays authoritative snapshots and sends requests; inventory, bank and building totals refresh from replicated results",
+    "pending_requests": "Show pending/result feedback; a locally disabled button is not a substitute for server validation"
+  },
+  "delivery_order": [
+    "Complete inventory/stat multiplayer checks",
+    "Implement and test shared inventory transfers and vendor transactions",
+    "Implement guild identity, membership, role permissions and bank",
+    "Implement territory and one complete material-funded building placement/upgrade path",
+    "Implement one complete farm crop and one staffed production recipe",
+    "Connect management tabs, technology and reputation",
+    "Persist guild and settlement state and verify travel/reconnect behavior"
+  ],
+  "acceptance_scenarios": [
+    "Nonmembers and members without a permission cannot mutate guild state",
+    "Two members competing for the last materials produce only the affordable outcome",
+    "Failed placement, full bank or failed actor creation preserves materials",
+    "Repeated placement, harvest, withdrawal and research requests cannot duplicate outputs",
+    "A late-joining member sees current bank, buildings, workers and crops",
+    "Leaving or being removed revokes access immediately",
+    "Saving and reopening preserves IDs, quantities and completed actions without repeating rewards"
+  ]
+}

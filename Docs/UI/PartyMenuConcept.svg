@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="45%" r="75%">
+      <stop offset="0" stop-color="#25211d"/><stop offset="1" stop-color="#090908"/>
+    </radialGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#251f1a" stop-opacity=".97"/><stop offset="1" stop-color="#100e0c" stop-opacity=".98"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#6d4c1e"/><stop offset=".5" stop-color="#d2a85a"/><stop offset="1" stop-color="#6d4c1e"/>
+    </linearGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="8" stdDeviation="12" flood-opacity=".75"/></filter>
+    <style>
+      .title{font-family:Georgia,serif;font-weight:bold;fill:#efdcae;letter-spacing:3px}
+      .label{font-family:Georgia,serif;fill:#d8c49a}
+      .small{font-family:Arial,sans-serif;fill:#a99b83}
+      .name{font-family:Arial,sans-serif;font-weight:bold;fill:#eee7d7}
+      .btn{fill:#29231d;stroke:#9b7539;stroke-width:2}
+      .slot{fill:#171512;stroke:#57472e;stroke-width:1.5}
+    </style>
+  </defs>
+  <rect width="1440" height="900" fill="url(#bg)"/>
+  <circle cx="1150" cy="170" r="290" fill="#5b130f" opacity=".12"/>
+  <circle cx="230" cy="780" r="350" fill="#113134" opacity=".12"/>
+  <g filter="url(#shadow)">
+    <rect x="110" y="70" width="1220" height="760" rx="8" fill="url(#panel)" stroke="#a17a3d" stroke-width="3"/>
+    <rect x="123" y="83" width="1194" height="4" fill="url(#gold)"/>
+  </g>
+  <text x="720" y="130" text-anchor="middle" class="title" font-size="42">ADVENTURING PARTY</text>
+  <text x="720" y="160" text-anchor="middle" class="small" font-size="14">Shared experience • Shared quest progress • Individual rewards</text>
+
+  <rect x="150" y="195" width="715" height="575" rx="6" fill="#0d0c0b" stroke="#57472e" stroke-width="2"/>
+  <text x="182" y="236" class="title" font-size="22">PARTY MEMBERS</text>
+  <text x="828" y="235" text-anchor="end" class="label" font-size="18">4 / 10</text>
+
+  <g transform="translate(175 265)">
+    <rect width="665" height="92" rx="4" class="slot"/>
+    <circle cx="48" cy="46" r="31" fill="#2b2925" stroke="#cf9e47" stroke-width="3"/>
+    <path d="M35 59q13-27 26 0M40 38q8-13 16 0" fill="none" stroke="#d7c59e" stroke-width="5"/>
+    <text x="95" y="39" class="name" font-size="20">Trexdon</text><text x="95" y="64" class="small" font-size="14">Leader • Level 18 • 92m</text>
+    <rect x="570" y="28" width="70" height="35" rx="18" fill="#543b16" stroke="#c69a4d"/><text x="605" y="51" text-anchor="middle" class="label" font-size="13">LEADER</text>
+  </g>
+  <g transform="translate(175 369)">
+    <rect width="665" height="92" rx="4" class="slot"/>
+    <circle cx="48" cy="46" r="31" fill="#2b2925" stroke="#776b52" stroke-width="3"/>
+    <path d="M35 59q13-27 26 0M40 38q8-13 16 0" fill="none" stroke="#d7c59e" stroke-width="5"/>
+    <text x="95" y="39" class="name" font-size="20">Ilyra</text><text x="95" y="64" class="small" font-size="14">Member • Level 17 • 115m</text>
+    <circle cx="618" cy="46" r="6" fill="#4cc982"/><text x="600" y="72" text-anchor="middle" class="small" font-size="11">READY</text>
+  </g>
+  <g transform="translate(175 473)">
+    <rect width="665" height="92" rx="4" class="slot"/>
+    <circle cx="48" cy="46" r="31" fill="#2b2925" stroke="#776b52" stroke-width="3"/>
+    <path d="M35 59q13-27 26 0M40 38q8-13 16 0" fill="none" stroke="#d7c59e" stroke-width="5"/>
+    <text x="95" y="39" class="name" font-size="20">Brom</text><text x="95" y="64" class="small" font-size="14">Member • Level 18 • 127m</text>
+    <circle cx="618" cy="46" r="6" fill="#4cc982"/><text x="600" y="72" text-anchor="middle" class="small" font-size="11">READY</text>
+  </g>
+  <g transform="translate(175 577)">
+    <rect width="665" height="92" rx="4" class="slot"/>
+    <circle cx="48" cy="46" r="31" fill="#2b2925" stroke="#776b52" stroke-width="3"/>
+    <path d="M35 59q13-27 26 0M40 38q8-13 16 0" fill="none" stroke="#d7c59e" stroke-width="5"/>
+    <text x="95" y="39" class="name" font-size="20">Saeve</text><text x="95" y="64" class="small" font-size="14">Member • Level 16 • 181m</text>
+    <circle cx="618" cy="46" r="6" fill="#d7aa42"/><text x="600" y="72" text-anchor="middle" class="small" font-size="11">AWAY</text>
+  </g>
+  <rect x="175" y="690" width="480" height="50" rx="3" fill="#171512" stroke="#57472e"/><text x="195" y="721" class="small" font-size="16">Select a nearby or connected player…</text>
+  <rect x="670" y="690" width="170" height="50" rx="3" class="btn"/><text x="755" y="721" text-anchor="middle" class="label" font-size="17">SEND INVITE</text>
+
+  <rect x="895" y="195" width="395" height="575" rx="6" fill="#0d0c0b" stroke="#57472e" stroke-width="2"/>
+  <text x="925" y="236" class="title" font-size="22">PARTY SIZE</text>
+  <g transform="translate(925 260)">
+    <rect width="95" height="48" rx="4" class="btn"/><text x="48" y="31" text-anchor="middle" class="label" font-size="18">4</text>
+    <rect x="110" width="95" height="48" rx="4" fill="#60451c" stroke="#d0a255" stroke-width="2"/><text x="158" y="31" text-anchor="middle" class="label" font-size="18">10</text>
+    <rect x="220" width="95" height="48" rx="4" class="btn"/><text x="268" y="31" text-anchor="middle" class="label" font-size="18">20</text>
+  </g>
+  <text x="925" y="338" class="title" font-size="22">SHARED QUEST</text>
+  <rect x="925" y="358" width="335" height="145" rx="4" class="slot"/>
+  <text x="945" y="390" class="name" font-size="17">Break the Siege</text>
+  <text x="945" y="420" class="small" font-size="14">Defeat Ashen Raiders</text>
+  <rect x="945" y="442" width="295" height="14" rx="7" fill="#24201a"/><rect x="945" y="442" width="177" height="14" rx="7" fill="#8e2920"/>
+  <text x="945" y="483" class="label" font-size="14">12 / 20 — progress shared with party</text>
+  <text x="925" y="548" class="title" font-size="22">PARTY RULES</text>
+  <text x="925" y="580" class="small" font-size="14">Experience sharing</text><text x="1245" y="580" text-anchor="end" class="label" font-size="14">FULL XP</text>
+  <text x="925" y="612" class="small" font-size="14">Quest progress</text><text x="1245" y="612" text-anchor="end" class="label" font-size="14">SHARED</text>
+  <text x="925" y="644" class="small" font-size="14">Quest rewards</text><text x="1245" y="644" text-anchor="end" class="label" font-size="14">EACH MEMBER</text>
+  <rect x="925" y="690" width="155" height="50" rx="3" class="btn"/><text x="1002" y="721" text-anchor="middle" class="label" font-size="17">LEAVE</text>
+  <rect x="1095" y="690" width="165" height="50" rx="3" class="btn"/><text x="1178" y="721" text-anchor="middle" class="label" font-size="17">CLOSE</text>
+  <text x="1288" y="112" text-anchor="end" class="label" font-size="26">×</text>
+</svg>

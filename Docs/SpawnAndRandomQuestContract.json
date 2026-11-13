@@ -1,0 +1,71 @@
+{
+  "authority": "User clarification on 2026-10-23: random spawners, spawn areas, quest spawners inside locations, random quests, quest groups and random rewards existed in the GitHub project",
+  "status": "Native spawning, location quest offers, quest groups, random rewards, claim protection and versioned snapshots are implemented with production Master Blueprint bases and quest data assets. Eight native regressions and 44 host/client checks pass. Production map placement and existing widget integration remain content work.",
+  "confirmed_scope": [
+    "Random world spawners and bounded spawn areas",
+    "Quest spawners associated with locations",
+    "Random quest selection/generation",
+    "Quest groups",
+    "Random rewards"
+  ],
+  "recovery_policy": "Recover original definitions, Blueprint relationships, placement and rules before replacing them. Preserve existing identifiers and authored content. Distinguish reconstruction choices from recovered behavior.",
+  "semantics_to_recover": [
+    "Whether quest groups represent selection pools, linked quest chains, encounter groups or another authored structure; do not equate them with player parties",
+    "What each spawner produces: AI, encounters, quest givers, objectives, pickups or another class",
+    "Spawn area shape, location membership, eligibility, activation, cooldown and population rules",
+    "Quest selection weights, exclusions, prerequisites, repeatability and regeneration/reset rules",
+    "Whether reward rolls happen at generation, acceptance, completion or another original event",
+    "Reward pools, weights, quantity ranges, player/group entitlements and difficulty/level scaling"
+  ],
+  "multiplayer_implementation_requirements": [
+    "The server owns spawn decisions, random quest selection, reward rolls and resulting gameplay actors/state",
+    "Use stable spawn, location, quest-instance and reward-claim identities; a location is context and does not itself define personal, party or guild ownership",
+    "Validate eligibility, configured population limits and placement before spawning; failed spawn attempts must not count as successful spawns",
+    "Connect spawned objective actors to the correct quest instance so unrelated kills/interactions cannot advance another quest",
+    "Replicate spawned actors and quest offers/progress only to the intended recipients, including initialization for late joins",
+    "At the chosen roll event, retain the authoritative result for the quest/reward entitlement; repeated requests, UI reopening and failed grants must not reroll it",
+    "Preflight inventory capacity and grant item/currency rewards together; record claim completion only after successful delivery, with defined handling for XP and group rewards",
+    "Persist the quest instance, selected objectives/rewards and completed claims across supported save/load and reconnect flows",
+    "Keep population, spawn scheduling and quest-group selection within configurable server budgets, including level streaming and session lifecycle cleanup"
+  ],
+  "acceptance_checks": [
+    "Two connected players observe the intended shared spawns without each client generating duplicates",
+    "Spawn placement stays within the configured area and rejects blocked or otherwise invalid locations",
+    "Configured population limits and cooldowns survive repeated activation and actor destruction",
+    "Quest spawners choose only definitions eligible for the location and intended player/group",
+    "Quest-group selection follows recovered group semantics and dependencies",
+    "Repeated reward claims or full-inventory retries preserve the rolled result and cannot duplicate rewards",
+    "Late join, reconnect and save/load preserve the intended spawns, quest state and reward entitlements"
+  ],
+  "evidence": {
+    "local_repository": "C:/Personal Games/DuTraveller-5.4.2-source",
+    "historical_commit": "f90ae6dcd48378bf890cbada7d893315c86c6fe8",
+    "local_findings": [
+      "RPGQuest.h has staged objectives, ItemRewards, CurrencyRewards and XPReward fields reconstructed from retained contracts. These do not establish randomized reward behavior.",
+      "RPGQuest.cpp currently leaves AddNewQuest and TurnInQuest empty.",
+      "The historical tracked file-name search found quest UI assets but no explicitly named quest/random/area spawner asset.",
+      "The other local DuTraveller project has Variant_Combat/AI/CombatEnemySpawner source and Blueprint assets. Their template placement does not establish that they are the original RPG spawners."
+    ],
+    "github_checks": [
+      {
+        "repository": "garodon21aque/DuTraveller-5.4.2",
+        "branch_returned": "master",
+        "latest_commit_returned": "f90ae6dcd48378bf890cbada7d893315c86c6fe8",
+        "finding": "Matches the inspected historical local commit. GitHub spawn text search returned character/template component references, not the requested systems. Binary Blueprint behavior is not established by text search."
+      },
+      {
+        "repository": "garodon21aque/DuTraveller",
+        "branch_returned": "main",
+        "commit_inspected": "297d1aaa91ed909091caa69c3c45427087e3b950",
+        "finding": "The complete recursive tree returned for this commit contains only README.md."
+      }
+    ],
+    "limitation": "These checks do not prove the original systems never existed. Another repository, backup, branch, uncommitted content or absent Blueprint package may contain them."
+  },
+  "related_contracts": [
+    "QuestGameplayContract.json",
+    "MultiplayerGameplayContract.json",
+    "ImplementationPlan.json"
+  ],
+  "implementation_reference": "SpawnQuestImplementation.json"
+}

@@ -1,0 +1,41 @@
+[
+  {
+    "OriginalAsset": "Content/UI/InventorySystem/WBP_PlayerInventory.uasset",
+    "OriginalCommit": "f90ae6dcd48378bf890cbada7d893315c86c6fe8",
+    "LfsObject": "bbda84a839d5ac7b4eb49315d5c60f83ddd37712337703ad488e68e074545209",
+    "RoleEvidence": [
+      "/Game/Blueprints/Player/BP_PlayerCharacter",
+      "RPGCharacter"
+    ]
+  },
+  {
+    "OriginalAsset": "Content/UI/World/WPB_TargetEnemy.uasset",
+    "OriginalCommit": "f90ae6dcd48378bf890cbada7d893315c86c6fe8",
+    "LfsObject": "6db686b6e500a0cec9b11e7ff3e89c38321b1f8f47f7f69c5b4cda4c2933d8d2",
+    "RoleEvidence": [
+      "/Game/Blueprints/AI/BP_RPGAICharacter",
+      "RPGAICharacter",
+      "RPGInteractionComponent"
+    ]
+  },
+  {
+    "OriginalAsset": "Content/Art/3D/Player/Animations/Anims/AnimBP_RPGCharacter.uasset",
+    "OriginalCommit": "f90ae6dcd48378bf890cbada7d893315c86c6fe8",
+    "LfsObject": "214747ff8e3e0b442ae56ae9bd115c404aabd18bf839628cdd8077799836a81b",
+    "RoleEvidence": [
+      "/Game/Blueprints/Player/BP_PlayerCharacter",
+      "RPGAnimInstance"
+    ]
+  },
+  {
+    "OriginalAsset": "Content/Art/3D/Player/Animations/Anims/AnimBP_RPGAICharacter.uasset",
+    "OriginalCommit": "f90ae6dcd48378bf890cbada7d893315c86c6fe8",
+    "LfsObject": "9ba6bef9a38ddff7764403e9403bb091d75a9b646e593217d17707521677a178",
+    "RoleEvidence": [
+      "/Game/Blueprints/AI/BP_RPGAICharacter",
+      "/Game/Blueprints/AI/BP_RPGAIController",
+      "RPGAICharacter",
+      "RPGAnimInstance"
+    ]
+  }
+]

@@ -1,0 +1,46 @@
+{
+  "scope": "Local project evidence; no class balance or loadouts have been invented",
+  "evidence_files": ["GameplayAssetInventory.json", "ClassSkillTreeEvidence.json", "CharacterHierarchy.json", "OriginalCharacterRoleEvidence.json"],
+  "class_roster": {
+    "evidenced_skill_path_ui": ["Mage", "Warrior"],
+    "progression_model": "User-confirmed hybrid progression: players may combine skills across trees as they level up. Class references do not establish exclusive class locks. See PlayerProgressionContract.json.",
+    "complete_roster_verified": false,
+    "note": "Enemy models named Elf Mage, Orc Mage or Troll Warrior are not evidence of additional player classes."
+  },
+  "systems": [
+    {
+      "system": "Models and equipment art",
+      "present": "Modular player body parts; chest, gloves, helmets, shoes and trousers; swords, axe, bow, spear, wand and grimoire; separate enemy models",
+      "load_check": "57 skeletal meshes loaded without load exceptions; 22 resolved a skeleton and 35 had no resolved skeleton, including modular player body parts and multiple humanoid enemies",
+      "unverified": "Exact per-class mesh assembly, skeletal compatibility, sockets and intended starting equipment"
+    },
+    {
+      "system": "Animation",
+      "present": "737 project-wide animation sequences and 70 montages, including Mage casting and Warrior axe montages, player and AI animation Blueprints, retargeting assets. Counts include sandbox and AI content and are not counts per player class.",
+      "gap": "Registry evidence includes 318 assets referencing the absent /Game/Characters/Mannequin_UE4/Meshes/SK_Mannequin_Skeleton and 3 referencing another absent demo mannequin skeleton",
+      "unverified": "Full per-class locomotion, cast, melee, hit reaction and equipment animation compatibility"
+    },
+    {
+      "system": "GAS attributes and abilities",
+      "present": "GAS plugin, native ASC and AttributeSet class shells, reconstructed ability/attribute display structures, status/input/attribute/ability tags and cooldown observer",
+      "confirmed_design": "User confirmed permanent base-attribute investment using attribute points, separately from spell/skill points. Equipment contributes additional removable stat bonuses. See PlayerProgressionContract.json.",
+      "gap": "DT_AttributeSet declares no attributes. No native InitAbilityActorInfo, GiveAbility, ApplyGameplayEffect or FGameplayAttributeData implementation was found. Registry inventory contains no GameplayAbility/GameplayEffect Blueprint native parents.",
+      "unverified": "Original starting stats, build/skill-dependent formulas, granted abilities, effects, damage/resistances, costs, cooldowns and progression. Do not impose exclusive class stat presets."
+    },
+    {
+      "system": "Inventory and equipment gameplay",
+      "present": "Inventory/equipment UI and reconstructed inventory stacking, quantities, item and equipment slot types",
+      "gap": "Equipment implementation records slot membership but does not establish the original visual, stat modifier or ability-grant behavior",
+      "confirmed_design": "User confirmed that equipped items contribute bonuses to player base stats. Track equipment contributions separately from permanent progression and remove/reapply them correctly on swap, unequip and reload.",
+      "unverified": "Actual item bonus values, additive/percentage and stacking rules, starting loadouts, skill grants and persistence. The design is confirmed; its current implementation is incomplete."
+    },
+    {
+      "system": "Class skill trees",
+      "present": "WBP_MageSpellTree, WBP_MageTalentTree, WBP_WarriorSpellTree and serialized ability tags",
+      "gap": "Spell selection, point spending and equip functions in RPG_SpellMenuWidgetController.cpp are empty",
+      "unverified": "Unlock prerequisites, point costs, level gates, mutual exclusions, rank scaling, refund rules and persistence",
+      "note": "Warrior tree contains elemental spell tags as well as melee tags; do not assume a purely melee class."
+    }
+  ],
+  "required_understanding_before_gameplay_rewiring": "For the shared hybrid-capable player, trace mesh/skeleton/animation, player ownership and ASC initialization, starting attributes and effects, skills learned across trees, equipment changes, hotbar/passive assignment, activation, HUD updates and save/reload as one connected chain. Track missing evidence explicitly. Follow PlayerProgressionContract.json."
+}

@@ -1,0 +1,73 @@
+[
+  {
+    "Widget": "WBP_MageSpellTree",
+    "SerializedAbilityTags": [
+      "Abilities.Air.AirBolt",
+      "Abilities.Air.PushBack",
+      "Abilities.Earth.EarthQuake",
+      "Abilities.Earth.EarthWall",
+      "Abilities.Earth.Root",
+      "Abilities.Electric.ChainLightning",
+      "Abilities.Electric.ElectricBlink",
+      "Abilities.Electric.ElectricBolt",
+      "Abilities.Fire.FireBlast",
+      "Abilities.Fire.FireBolt",
+      "Abilities.Fire.FireBreath",
+      "Abilities.Fire.MeteorStrike",
+      "Abilities.Ice.IceShards",
+      "Abilities.Ice.IceSpikes",
+      "Abilities.Ice.IceStorm",
+      "Abilities.Ice.IceWall",
+      "Abilities.Light.HolyShield",
+      "Abilities.Light.HolySmite",
+      "Abilities.Light.LightBolt",
+      "Abilities.Light.LightHeal",
+      "Abilities.Shadow.ShadowBolt",
+      "Abilities.Shadow.ShadowFear",
+      "Abilities.Shadow.ShadowShipon",
+      "Abilities.Water.WaterBolt",
+      "Abilities.Water.WaterHeal",
+      "Abilities.Water.WaterStream"
+    ],
+    "Interpretation": "Serialized UI evidence only; not proof of executable abilities, ownership, unlock prerequisites, costs, cooldowns, or balance."
+  },
+  {
+    "Widget": "WBP_MageTalentTree",
+    "SerializedAbilityTags": [
+      "Abilities.Passive.HaloOfProtection",
+      "Abilities.Passive.LifeSiphon",
+      "Abilities.Passive.ManaSiphon"
+    ],
+    "Interpretation": "Serialized UI evidence only; not proof of executable abilities, ownership, unlock prerequisites, costs, cooldowns, or balance."
+  },
+  {
+    "Widget": "WBP_WarriorSpellTree",
+    "SerializedAbilityTags": [
+      "Abilities.Earth.EarthQuake",
+      "Abilities.Earth.EarthWall",
+      "Abilities.Earth.Root",
+      "Abilities.Electric.ChainLightning",
+      "Abilities.Electric.ElectricBlink",
+      "Abilities.Electric.ElectricBolt",
+      "Abilities.Fire.FireBlast",
+      "Abilities.Fire.FireBolt",
+      "Abilities.Fire.MeteorStrike",
+      "Abilities.Ice.IceShards",
+      "Abilities.Ice.IceStorm",
+      "Abilities.Ice.IceWall",
+      "Abilities.Light.HolyShield",
+      "Abilities.Light.LightBolt",
+      "Abilities.Light.LightHeal",
+      "Abilities.Melee.FullSwing",
+      "Abilities.Melee.Slash",
+      "Abilities.Melee.Swing",
+      "Abilities.Shadow.ShadowBolt",
+      "Abilities.Shadow.ShadowFear",
+      "Abilities.Shadow.ShadowShipon",
+      "Abilities.Water.WaterBolt",
+      "Abilities.Water.WaterHeal",
+      "Abilities.Water.WaterStream"
+    ],
+    "Interpretation": "Serialized UI evidence only; not proof of executable abilities, ownership, unlock prerequisites, costs, cooldowns, or balance."
+  }
+]

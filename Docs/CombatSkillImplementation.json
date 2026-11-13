@@ -1,0 +1,41 @@
+{
+  "status": "Combat and hybrid-skill runtime implemented with production ability content, hotbar input, target lock and animation/VFX binding; AI activation and packaged validation remain in progress",
+  "hierarchy": {
+    "master_runtime": "RPGCharacter.ActionComp (RPGActionComponent)",
+    "replication": "The parent ActionComponent replicates one compact committed-action state containing ability ID, data definition, target, server start time and monotonic sequence.",
+    "children": "RPGAction Blueprint children and combat ability data definitions are not individually replicated. The parent initializes legacy action ownership and forwards their state/stopped delegates.",
+    "progression": "RPGPlayerState.Skills owns owner-only learned ranks and hotbar assignments. It calls the possessed character's ActionComp for server execution.",
+    "model": "Abilities from melee, spell, utility and passive paths can be combined when level, point and prerequisite rules are met; there is no exclusive class lock.",
+    "catalogue": "DT_PlayerAbilities (FRPGAbilityCatalogueRow) is the authoritative 32-skill catalogue on BP_PlayerState.Skills; inline AvailableAbilities remains the fallback."
+  },
+  "implemented": [
+    "Server-validated learning and upgrading with spell-point costs and prerequisite IDs",
+    "Owner-only learned-skill and hotbar replication",
+    "Server activation routed through the parent ActionComponent",
+    "Target validity, faction, range and line-of-sight validation",
+    "Mana and stamina costs, cooldown enforcement, damage scaling, armor/penetration and critical hits",
+    "Replicated character death state and presentation event",
+    "Defeated quest credit continues through the spawn context health/death bridge",
+    "All 32 widget skill-tree abilities have executable DA_Player_* definitions with branch prerequisites (Fire/Ice/Electric/Earth/Water/Light/Shadow/Air/Melee/Passive)",
+    "Payload executions: damage, projectile, area, cone, heal, shield, blink, root, fear, drain, wall, chain and melee window (RPGSkillExecution + authoritative ARPGProjectile)",
+    "Montage release events bound via Event.Animation.SpellRelease with combat animation mappings on BP_PlayerCharacter's DT_AnimationRouter",
+    "Hotbar activation across all 12 slots (LMB, RMB, 1-9, 0) via ARPGPlayerController::InputKey, with panel/paused gating",
+    "Skill-menu equip mode reassigns the selected skill to any slot via the same 12 keys or HUD globe buttons, with swap/displace semantics",
+    "Target lock toggle (Tab, editable TargetLockKey): locks the best front-facing hostile in range and line of sight, steers the camera while held, and drops on death/range/occlusion; free-aim resolves via camera trace when unlocked",
+    "Passive tree (HaloOfProtection armor, LifeSiphon, ManaSiphon) applies through GAS effects on learn",
+    "Starter loadout: Slash(LMB), FireBolt(RMB), ElectricBolt(1), FullSwing(2), IceShards(3)"
+  ],
+  "remaining": [
+    "Implement AI selection and activation through the same ActionComponent",
+    "Bind per-skill distinct montages/VFX where unique assets exist (shared cast/melee montages are the current default)",
+    "Balance pass on rank scaling, costs and cooldowns in the generated definitions",
+    "Run listen-server/remote-client action replication checks and packaged validation",
+    "WBP_MageTalentTree globes carry no ability tags; the talent-tree content source is still undetermined"
+  ],
+  "verification": {
+    "build": "DTEditor Development build succeeded after the input/skill-execution changes (Devin session 2026-10-27)",
+    "asset_implementation": "Tools/Implement-CompleteSkillTree.py -> Saved/Automation/CompleteSkillTree.json: passed, 32 skills, 20 prerequisite links, catalogue + PlayerState + animation router updated",
+    "editor_audit": "Saved/Automation/SkillTreeCombatAudit.json: zero errors, 32 definitions, deduplicated starter hotbar, all skill widgets BS_UpToDate",
+    "full_native": "Saved/Automation/SkillTreeComplete/index.json: 22 tests succeeded, zero failed (includes SkillTreeProgressionAndAllSlots, HotbarInputAndSwap, TargetLockToggle, CompleteTreeContentAndPayloads)"
+  }
+}

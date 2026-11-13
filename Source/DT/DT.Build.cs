@@ -8,8 +8,26 @@ public class DT : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
+        PublicDependencyModuleNames.AddRange(new string[]
+        {
+            "Core",
+            "CoreUObject",
+            "Engine",
+            "InputCore",
+            "UMG",
+            "GameplayTasks",
+            "AIModule",
+            "GameplayTags",
+            "GeometryCollectionEngine",
+            "NavigationSystem",
+            "Niagara",
+            "EnhancedInput",
+            "GameplayAbilities",
+            // The modern Motion Matching/traversal Blueprints remain in DT,
+            // while their native framework now derives from the restored RPG/GAS layer.
+            "DuTraveller"
+        });
 
-        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "UMG", "GameplayTasks", "AIModule", "UMG", "GameplayTags", "GeometryCollectionEngine", "NavigationSystem", "AIModule", "Niagara", "EnhancedInput", "GameplayAbilities" });
         PrivateDependencyModuleNames.AddRange(new string[] { "GameplayTags", "GameplayTasks" });
 
 

@@ -1,0 +1,89 @@
+{
+ "objective": "Restore the original RPG multiplayer game: hybrid skill progression, attribute spending, equipment stat bonuses, inventory/currency, quests, parties and the guild settlement economy (building, crafting, vendors, farming and guild management). Identify the main-world map from evidence. The first implementation milestone remains one coherent playable player/inventory sequence, with server ownership and replication designed from the outset.",
+ "guild_world_requirements": "Docs/GuildEconomyWorldContract.json. Historical DT-prefixed guild classes may be intended gameplay; preserve and assess them by role rather than prefix. The pictured main world must not be equated with Tutorial without package evidence.",
+ "quest_requirements": "Docs/QuestGameplayContract.json. User-confirmed categories: guild, personal, party, class and area. Recover ownership, eligibility, progress sharing and reward rules separately; preserve hybrid progression and multiplayer authority.",
+ "multiplayer_requirements": "Docs/MultiplayerGameplayContract.json; the server validates authoritative gameplay changes and replicates state to the correct owners/audiences. Personal progression, inventory/equipment and personal random-quest paths now have controlled host/client verification. Party/guild sharing rules and packaged/dedicated-server validation remain incomplete.",
+ "checkpoint": "C:/Personal Games/RestorationCheckpoints/before-codex-20261023-004521",
+ "checkpoint_verified_files": 224,
+ "scope": "Preserve the existing motion-matching player and original assets; no speculative skeletons or bulk resaves",
+ "repairs": [
+  {
+   "failure": "GameDefaultMap points to /Engine/Maps/Templates/OpenWorld",
+   "evidence": "Config/DefaultEngine.ini and read-only editor inspection confirm /Game/Levels/MainMenu exists",
+   "hypothesis": "Normal game startup cannot reach the authored menu while the template map is configured",
+   "change": "Set GameDefaultMap to /Game/Levels/MainMenu",
+   "validation": "Authored MainMenu widget was created and present in the PIE viewport (Codex-RuntimeSmoke-r3.log). Physical interaction and menu-button travel remain unverified."
+  },
+  {
+   "failure": "Repair helpers save Blueprints regardless of compile failure",
+   "evidence": "DTStructRepairLibrary::ForceCompileAndSave and SaveAssetPackage had no compile-status gate",
+   "hypothesis": "Refusing failed or uncompiled Blueprint saves prevents another repair pass from persisting broken graphs",
+   "change": "Require BS_UpToDate or BS_UpToDateWithWarnings before saving Blueprints through either helper",
+   "validation": "Native DTEditor build succeeded (Codex-SafeRepairBuild.log). SaveAssetPackage refused WBP_PlayerStat in BS_ERROR status and its SHA256 stayed unchanged (Codex-RuntimeSmoke-r3.log). ForceCompileAndSave compiles successfully but its refusal branch has not been independently exercised."
+  },
+  {
+   "failure": "Skill-tree widgets exposed ~30 ability tags but only four executable definitions existed, no prerequisite links, LMB/RMB/1-9/0 had no hotbar path, and no target-lock toggle existed",
+   "evidence": "SkillTreeCombatAudit (2026-10-27): 4 definitions, empty prerequisite_abilities, duplicate FireBolt starter slots. Docs/ClassSkillTreeEvidence.json lists 32 serialized ability tags. The old local project carried projectile/teleport/heal/block patterns in Blueprints, not a lock-on binding",
+   "hypothesis": "Data-driven URPGCombatAbilityDefinition assets plus a catalogue table satisfy every serialized tag; payload executions in RPGSkillExecution cover the recovered Blueprint behaviors; controller-level key routing reaches slots the pawn input context consumes",
+   "change": "Created/completed 32 DA_Player_* definitions with branch prerequisites and GAS payloads, built DT_PlayerAbilities catalogue, wired BP_PlayerState.Skills and BP_PlayerCharacter montage mappings, added 12-slot hotbar input + skill-menu equip reassignment, Tab target-lock with LOS/range/occlusion rules, fixed duplicate starter slot",
+   "validation": "DTEditor build succeeded; CompleteSkillTree.json passed with 32 skills and zero errors; SkillTreeCombatAudit.json: 32 definitions, 20 prerequisite links, all widgets BS_UpToDate; 22/22 DuTraveller.Restoration tests pass including SkillTreeProgressionAndAllSlots, HotbarInputAndSwap, TargetLockToggle and CompleteTreeContentAndPayloads"
+  }
+ ],
+ "integration_findings": [
+  {
+   "evidence": "Editor inspection of Tutorial world settings and DT_GameModeBase defaults",
+   "finding": "Tutorial uses /Game/Blueprints/Characters/BP_PlayerCharacter, not the generated /Game/Blueprints/Player/BP_PlayerCharacter",
+   "implication": "Restoring legacy character functions does not by itself connect inventory to the active Tutorial pawn"
+  },
+  {
+   "evidence": "Serialized references in WBP_PlayerInventory and WBP_HUD; Source/DT/DT_HUD.h",
+   "finding": "Inventory expects /Game/Blueprints/Player/BP_PlayerCharacter; HUD expects BP_RPGPlayerController; the active framework uses different classes and DT_HUD has no UI initialization implementation",
+   "implication": "Inventory integration requires deliberate owner/controller wiring and HUD initialization, not another bulk Blueprint refresh"
+  }
+ ],
+ "test_harness_lessons": [
+  "Use verified Unreal Python ScriptName aliases: WidgetLibrary and Controller.get_controlled_pawn",
+  "UnrealEditor-Cmd exits after script execution unless EditorPythonScripting.set_keep_python_script_alive(True) is set for asynchronous checks",
+  "Never change editor maps from a Slate callback: load_map can pump callbacks recursively and reenter World Partition initialization. Use one map per process.",
+  "Earlier incomplete or crashed harness runs are not evidence of a gameplay regression",
+  "Native automation test worlds must InitializeActorsForPlay so default GAS attribute sets are discovered through component initialization.",
+  "Unreal Python uses FEditorScriptExecutionGuard: AActor::GetFunctionCallspace returns Local whenever GAllowActorScriptExecutionInEditor is true. Remote action tests must dispatch through a scoped native PIE test bridge with this editor-only override disabled.",
+  "Guard Slate callbacks against reentry during asset loads. Prefer an existing map package for stable PIE level identity.",
+  "Do not rely on modifying native CDO primitive defaults in Python to populate native runtime fixture instances. Explicitly configure server-owned transient fixtures. Convert FName map keys to strings before Python string-key comparisons.",
+  "unreal.get_objects_with_outer does not exist in UE 5.8 Python; enumerate widget trees through DTStructRepairLibrary.inspect_skill_widgets or root_widget children",
+  "NiagaraEmitter assets cannot populate UNiagaraSystem properties; verify asset class before assignment and keep a same-school system fallback"
+ ],
+ "verification_limitations": [
+  "Unattended null-RHI checks do not establish visual correctness or physical keyboard/mouse behavior",
+  "Loading MainMenu and Tutorial independently does not validate clicking a menu button to travel",
+  "Blueprint compiler totals do not measure gameplay completion"
+ ],
+ "restoration_direction": "Follow the original RPG gameplay references for the main player, as clarified by the user. Player progression is hybrid: skills can be combined across trees as the character levels up; class references do not impose exclusive class locks. Follow Docs/PlayerProgressionContract.json. Keep AI-only classes separate. Understand models, skeletons, animations, GAS stats/abilities, equipment, learned skill ranks, hotbar/passive assignments and skill-tree rules as a connected system before gameplay rewiring. Tutorial currently selecting the DT motion-matching pawn is a wiring observation, not proof that the DT hierarchy is the intended restored gameplay base.",
+ "hierarchy_evidence": {
+  "current_editor_inventory": "Docs/CharacterHierarchy.json",
+  "original_asset_references": "Docs/OriginalCharacterRoleEvidence.json",
+  "shared_native_base": "Current RPGCharacter owns inventory, attributes, actions, crafting and quests; current RPGAICharacter derives from RPGCharacter",
+  "player_evidence": "Original WBP_PlayerInventory and AnimBP_RPGCharacter reference /Game/Blueprints/Player/BP_PlayerCharacter",
+  "ai_evidence": "Original WPB_TargetEnemy and AnimBP_RPGAICharacter reference /Game/Blueprints/AI/BP_RPGAICharacter; AI animation also references BP_RPGAIController",
+  "provenance_limit": "RPG player and AI Blueprint packages are absent from the historical commit and currently reconstructed. Their current direct parents do not establish the exact historical Blueprint inheritance."
+ },
+ "next_action": "Restore RPG player gameplay and validate its shared base separately from RPGAICharacter/RPGAIController. Do not redirect player UI onto AI classes or select an empty reconstructed RPG pawn merely to satisfy casts. Preserve the DT motion-matching assets as a separate existing branch until a tested integration is justified.",
+ "implementation_verification": {
+  "native_build": "Saved/Logs/Codex-PIEFixturesBuild.log: Succeeded",
+  "native_regressions": "Saved/Automation/Foundation/index.json: four succeeded, zero failed; warnings are GameplayCue search-path fallback and the deliberately blocked unsafe drop",
+  "verified_behaviors": [
+   "Permanent attribute investment composes with gear bonuses",
+   "Repeated equip does not stack and equal-max-health gear swaps preserve health",
+   "Unequipping preserves permanent investment and clamps resources",
+   "Foreign, invalid and worn item mutations are rejected",
+   "Unconfigured consumables preserve the item; configured resource effects apply and consume once",
+   "Currency/crafting transactions preflight capacity and ingredients before changing quantities"
+  ],
+  "multiplayer": "Saved/Automation/MultiplayerFoundation.json: passed all 19 controlled host/client checks, including remote point spending, gear, consumables, unequip, owner privacy and UI controller notification. Actual map/player/UI integration and dedicated/packaged testing are pending.",
+  "binary_preservation": "41 checkpointed uasset/umap files checked; zero changed",
+  "guild_design": "Docs/GuildSettlementDesign.json: new design authorized; implementation remains a separate planned phase",
+  "spawn_quest_native": "Saved/Automation/SpawningQuests-r3/index.json: eight succeeded, zero failed",
+  "spawn_quest_multiplayer": "Saved/Automation/SpawningQuestsMultiplayer.json: 44 passed, zero failed; linked actor/context/location metadata and stable reward quantities are verified",
+  "spawn_quest_assets": "Production bases are /Game/Blueprints/Gameplay/Spawning/BP_MasterRandomSpawnArea, BP_MasterLocationQuestSpawner and BP_MasterQuestTarget; definitions are in /Game/Data/Quests"
+ }
+}
